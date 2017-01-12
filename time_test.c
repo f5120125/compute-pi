@@ -4,18 +4,9 @@
 int main(int argc, char const *argv[])
 {
     __attribute__((unused)) int N = 400000000;
-	//__attribute__((unused)) 
     double pi = 0.0;
 #if defined(BASELINE)
     pi = compute_pi_baseline(N);
-#endif
-
-#if defined(MONTE_CARLO)
-    pi = monte_carlo_pi(N);
-#endif
-
-#if defined(MACHIN)
-    pi = machin_pi(N);
 #endif
 
 #if defined(OPENMP_2)
@@ -33,6 +24,19 @@ int main(int argc, char const *argv[])
 #if defined(AVXUNROLL)
     pi = compute_pi_avx_unroll(N);
 #endif
+
+#if defined(MONTE_CARLO)
+    pi = monte_carlo_pi(N);
+#endif
+
+/*#if defined(MACHIN)
+    pi = machin_pi(N);
+#endif
+*/
+#if defined(LEIBNIZ)
+    pi = compute_pi_leibniz(N);
+#endif   
+
     printf("N = %d , pi = %lf\n", N, pi);
 
     return 0;

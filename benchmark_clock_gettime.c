@@ -25,23 +25,6 @@ int main(int argc, char const *argv[])
     printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
            (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 
-	//monte carlo
-    clock_gettime(CLOCK_ID, &start);
-    for(i = 0; i < loop; i++) {
-        monte_carlo_pi(N);
-    }
-    clock_gettime(CLOCK_ID, &end);
-    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
-           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
-
-	//Machi
-    clock_gettime(CLOCK_ID, &start);
-    for(i = 0; i < loop; i++) {
-        machin_pi(N);
-    }
-    clock_gettime(CLOCK_ID, &end);
-    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
-           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 
     // OpenMP with 2 threads
     clock_gettime(CLOCK_ID, &start);
@@ -64,7 +47,7 @@ int main(int argc, char const *argv[])
 
 
     // AVX SIMD
-    /*clock_gettime(CLOCK_ID, &start);
+    clock_gettime(CLOCK_ID, &start);
     for(i = 0; i < loop; i++) {
         compute_pi_avx(N);
     }
@@ -79,8 +62,35 @@ int main(int argc, char const *argv[])
         compute_pi_avx_unroll(N);
     }
     clock_gettime(CLOCK_ID, &end);
-    printf("%lf\n", (double) (end.tv_sec - start.tv_sec) +
-           (end.tv_nsec - start.tv_nsec)/ONE_SEC);*/
+    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+    
+    //monte carlo
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        monte_carlo_pi(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf,", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
 
+    //leibniz
+    clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        compute_pi_leibniz(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf\n", (double) (end.tv_sec - start.tv_sec) +
+        (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+
+    //Machi
+    /*clock_gettime(CLOCK_ID, &start);
+    for(i = 0; i < loop; i++) {
+        machin_pi(N);
+    }
+    clock_gettime(CLOCK_ID, &end);
+    printf("%lf\n,", (double) (end.tv_sec - start.tv_sec) +
+           (end.tv_nsec - start.tv_nsec)/ONE_SEC);
+*/
     return 0;
 }
