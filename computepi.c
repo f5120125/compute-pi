@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
 #include <immintrin.h>
 #include <omp.h>
 #include "computepi.h"
@@ -30,7 +33,27 @@ double compute_pi_openmp(size_t N, int threads)
     return pi * 4.0;
 }
 
-double compute_pi_avx(size_t N)
+double monte_carlo_pi(size_t N){
+	const unsigned max = 10000;
+	unsigned long i = 0;
+	double x=0.0, y=0.0;
+	unsigned long in_times=0;
+
+	srand(time(NULL)); 
+	for(i=0; i<N; i++){
+		x=rand()%max;
+		y=rand()%max;
+
+		if(x*x + y*y < (double)(max*max))
+			in_times++;
+	}
+	return (4.0 * (double)(in_times)/(double)(N));
+}
+
+double machin_pi(){
+	return (16*atan(1.0/5.0) - 4 * atan(1.0/239.0));
+}
+/*double compute_pi_avx(size_t N)
 {
     double pi = 0.0;
     double dt = 1.0 / N;
@@ -116,4 +139,4 @@ double compute_pi_avx_unroll(size_t N)
           tmp3[0] + tmp3[1] + tmp3[2] + tmp3[3] +
           tmp4[0] + tmp4[1] + tmp4[2] + tmp4[3];
     return pi * 4.0;
-}
+}*/
